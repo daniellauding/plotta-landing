@@ -407,15 +407,20 @@
             document.getElementById('download-windows').innerHTML = '⬇️ Download for Windows';
         }
 
-        // Download links (update these when you have actual release URLs)
+        // Download links
         document.getElementById('download-mac').addEventListener('click', (e) => {
             e.preventDefault();
-            alert('macOS download will be available soon! Please use the web app for now: https://www.plotta.io');
+            // Detect Apple Silicon vs Intel
+            const isAppleSilicon = navigator.userAgent.includes('Mac') && navigator.platform === 'MacIntel';
+            const macUrl = isAppleSilicon
+                ? 'https://github.com/daniellauding/plotta-desktop/releases/download/v1.0.0/Plotta-macOS-arm64.zip'
+                : 'https://github.com/daniellauding/plotta-desktop/releases/download/v1.0.0/Plotta-macOS-x64.zip';
+            window.location.href = macUrl;
         });
 
         document.getElementById('download-windows').addEventListener('click', (e) => {
             e.preventDefault();
-            alert('Windows download will be available soon! Please use the web app for now: https://www.plotta.io');
+            window.location.href = 'https://github.com/daniellauding/plotta-desktop/releases/download/v1.0.0/Plotta-Windows-x64.zip';
         });
 
         // Smooth scroll for anchor links
