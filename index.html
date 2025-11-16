@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plotta - Collaborative sticky notes canvas for teams. Think, organize, and collaborate in real-time on an infinite canvas.">
+    <title>Plotta - Collaborative Sticky Notes Canvas</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a0a;
+            --fg: #ededed;
+            --accent: #3b82f6;
+            --muted: #737373;
+            --border: #262626;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--fg);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--fg);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(to right, var(--fg), var(--muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: var(--muted);
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--fg);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--fg);
+        }
+
+        /* Features */
+        .features {
+            padding: 120px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 48px;
+        }
+
+        .feature {
+            text-align: left;
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .feature h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .feature p {
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* Downloads */
+        .downloads {
+            padding: 120px 0;
+            background: #111;
+            text-align: center;
+        }
+
+        .downloads h2 {
+            font-size: 48px;
+            margin-bottom: 48px;
+        }
+
+        .download-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .download-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 40px 32px;
+            transition: all 0.3s;
+        }
+
+        .download-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .download-card .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .download-card h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .download-card p {
+            color: var(--muted);
+            margin-bottom: 24px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 48px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 24px;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--fg);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 48px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .downloads h2 {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">Plotta</a>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#download">Download</a></li>
+                    <li><a href="https://www.plotta.io" target="_blank">Launch App</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Think. Organize. Collaborate.</h1>
+                <p class="subtitle">
+                    Collaborative sticky notes canvas for teams. Visualize ideas on an infinite canvas with real-time sync across all your devices.
+                </p>
+                <div class="cta-buttons">
+                    <a href="https://www.plotta.io" class="btn btn-primary">
+                        <span>Launch Web App</span>
+                        <span>→</span>
+                    </a>
+                    <a href="#download" class="btn btn-secondary">Download Apps</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="features-grid">
+                    <div class="feature">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Infinite Canvas</h3>
+                        <p>Unlimited space to organize your thoughts. Pan, zoom, and arrange sticky notes however you want.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Real-Time Sync</h3>
+                        <p>Changes appear instantly across web, desktop, and mobile. Collaborate with your team in real-time.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Secure & Private</h3>
+                        <p>Your data is encrypted and secured. Control who can view and edit your projects with granular permissions.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📱</div>
+                        <h3>Cross-Platform</h3>
+                        <p>Works everywhere - web, macOS, Windows, iOS, and Android. Your notes sync seamlessly across all devices.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📁</div>
+                        <h3>File-Based Sync</h3>
+                        <p>Store notes as Markdown files on your computer. Works offline, syncs when online. Like Dropbox for sticky notes.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Powerful Features</h3>
+                        <p>Tags, search, colors, links, embeds, voting, and more. Everything you need to organize complex ideas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="downloads" id="download">
+            <div class="container">
+                <h2>Download Plotta</h2>
+                <p class="subtitle">Available on all your devices</p>
+
+                <div class="download-cards">
+                    <div class="download-card">
+                        <div class="icon">🌐</div>
+                        <h3>Web App</h3>
+                        <p>Works in any modern browser. No installation required.</p>
+                        <a href="https://www.plotta.io" class="btn btn-primary" target="_blank">Launch Web App</a>
+                    </div>
+
+                    <div class="download-card">
+                        <div class="icon">🍎</div>
+                        <h3>macOS</h3>
+                        <p>Native desktop app for Mac with menu bar integration.</p>
+                        <a href="#" class="btn btn-primary" id="download-mac">Download for Mac</a>
+                        <small style="display: block; margin-top: 8px; color: var(--muted);">macOS 11.0+</small>
+                    </div>
+
+                    <div class="download-card">
+                        <div class="icon">🪟</div>
+                        <h3>Windows</h3>
+                        <p>Native desktop app for Windows with system tray.</p>
+                        <a href="#" class="btn btn-primary" id="download-windows">Download for Windows</a>
+                        <small style="display: block; margin-top: 8px; color: var(--muted);">Windows 10+</small>
+                    </div>
+
+                    <div class="download-card">
+                        <div class="icon">📱</div>
+                        <h3>Mobile</h3>
+                        <p>Native apps for iOS and Android. Coming soon!</p>
+                        <a href="#" class="btn btn-secondary" disabled style="opacity: 0.5; cursor: not-allowed;">Coming Soon</a>
+                    </div>
+
+                    <div class="download-card">
+                        <div class="icon">📁</div>
+                        <h3>Sync Client</h3>
+                        <p>File-based sync. Store notes as Markdown files.</p>
+                        <a href="#" class="btn btn-secondary" disabled style="opacity: 0.5; cursor: not-allowed;">Coming Soon</a>
+                    </div>
+
+                    <div class="download-card">
+                        <div class="icon">🐧</div>
+                        <h3>Linux</h3>
+                        <p>Native desktop app for Linux distributions.</p>
+                        <a href="#" class="btn btn-secondary" disabled style="opacity: 0.5; cursor: not-allowed;">Coming Soon</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <ul class="footer-links">
+                <li><a href="https://github.com/daniellauding/plotta-desktop">GitHub</a></li>
+                <li><a href="mailto:support@plotta.io">Support</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Terms</a></li>
+            </ul>
+            <p>&copy; 2025 Plotta. Made with ❤️ for thinkers and builders.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Auto-detect OS and update download buttons
+        const userAgent = navigator.userAgent.toLowerCase();
+        const isMac = userAgent.includes('mac');
+        const isWindows = userAgent.includes('win');
+
+        // Update primary CTA based on OS
+        if (isMac) {
+            document.getElementById('download-mac').innerHTML = '⬇️ Download for Mac';
+        } else if (isWindows) {
+            document.getElementById('download-windows').innerHTML = '⬇️ Download for Windows';
+        }
+
+        // Download links (update these when you have actual release URLs)
+        document.getElementById('download-mac').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('macOS download will be available soon! Please use the web app for now: https://www.plotta.io');
+        });
+
+        document.getElementById('download-windows').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Windows download will be available soon! Please use the web app for now: https://www.plotta.io');
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
